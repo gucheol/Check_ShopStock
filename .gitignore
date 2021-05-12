@@ -1,0 +1,8 @@
+*.pyc
+*.log
+*.json
+/venv
+.idea
+.vscode
+__pycache__
+tutorial/__pycache__/*
