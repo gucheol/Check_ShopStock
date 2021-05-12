@@ -17,7 +17,7 @@ def url_json_data_download(url_dict, download_folder_path):
         json_name = url_key
         url = url_dict[url_key]
         download_path = os.path.join(download_folder_path, json_name)
-        os.system(f"sudo scrapy fetch --nolog {url} > {download_path}")
+        os.system(f"scrapy fetch --nolog {url} > {download_path}")
 ############## 가맹점 stock check ##############
 def all_url_stock_check(json_file_path, url_dict): # 가맹점 추가 시, 수정해야 됨
     if 'cupang' in json_file_path:
