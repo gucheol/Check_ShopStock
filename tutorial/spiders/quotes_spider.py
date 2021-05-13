@@ -110,7 +110,7 @@ class QuotesSpider(scrapy.Spider):
 
     def naver_check(self, response):
         try:
-            feature_text = response.xpath('//*[@id="content"]/div/div[2]/div[2]/fieldset/div[7]/ul[1]/li[1]/a/span/text()').get()
+            feature_text = response.xpath('//*[@id="content"]/div/div[2]/div[2]/fieldset/div[8]/ul[1]/li[1]/a/span/text()').get()
             if '구매하기' in feature_text:
                 print('네이버 : 재고있음', response.url)
             else:
