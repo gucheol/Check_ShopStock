@@ -13,7 +13,7 @@ class QuotesSpider(scrapy.Spider):
             'http://itempage3.auction.co.kr/DetailView.aspx?itemno=C224484103',
             'http://itempage3.auction.co.kr/DetailView.aspx?itemno=B768432406',
             'http://mitem.gmarket.co.kr/Item?goodscode=1808202487',
-            'http://mitem.gmarket.co.kr/Item?goodscode=1923620360',
+            'http://mitem.gmarket.co.kr/Item?goodscode=2064152797',
             'https://mw.wemakeprice.com/product/1284302768',
             'https://mw.wemakeprice.com/product/203255871',
             'http://mobile.tmon.co.kr/deals/5262257414',
