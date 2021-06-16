@@ -15,5 +15,6 @@ def send_message_to_telegram(text):
     bot.sendMessage(chat_id=chat_id_number, text=text)
 
 if __name__ == '__main__':
-    text = read_log() # 저장한 가맹점재고 결과 로그 불러오기
-    send_message_to_telegram(text) # 텔레그램으로 메시지 보내기
+    if os.path.isfile('test.log'):
+        text = read_log() # 저장한 가맹점재고 결과 로그 불러오기
+        send_message_to_telegram(text) # 텔레그램으로 메시지 보내기

@@ -7,7 +7,7 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 # LOG_LEVEL : CRITICAL, ERROR, WARNING, INFO, DEBUG
-LOG_LEVEL = 'CRITICAL'
+LOG_LEVEL = 'ERROR'
 
 BOT_NAME = 'tutorial'
 
