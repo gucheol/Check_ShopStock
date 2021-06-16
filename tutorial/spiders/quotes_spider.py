@@ -7,7 +7,7 @@ class QuotesSpider(scrapy.Spider):
     # 정상 : 'http://www.11st.co.kr/products/3335249590',
     def start_requests(self): # 가맹점 url 추가위치
         urls = [
-            'http://www.11st.co.kr/products/3335249590',
+            'http://www.11st.co.kr/products/2935980321',
             'http://www.ssg.com/item/itemView.ssg?itemId=0000001570515',
             'http://www.ssg.com/item/itemView.ssg?itemId=1000039507427',
             'http://itempage3.auction.co.kr/DetailView.aspx?itemno=C224484103',
