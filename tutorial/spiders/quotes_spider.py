@@ -60,7 +60,7 @@ class QuotesSpider(scrapy.Spider):
 
     def check(self, response, shop_name, hint_text, hint_xpath):
         try:
-            isDebug = True
+            isDebug = False
             feature_text = response.xpath(hint_xpath).get()
             if hint_text in feature_text:
                 if isDebug == True:
