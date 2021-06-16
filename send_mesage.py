@@ -10,7 +10,8 @@ def read_log():
 
 def send_message_to_telegram(text):
     HTTP_token = "1807456494:AAEc8mICKrJCQT8Xp2Ioo51aB6PPNtkI9-c"
-    chat_id_number = "1274502069"
+    #chat_id_number = "1274502069" # 권구철과 개인 챗 아이디
+    chat_id_number = "-1001328933921"
     bot = telegram.Bot(token=HTTP_token)
     bot.sendMessage(chat_id=chat_id_number, text=text)
 
