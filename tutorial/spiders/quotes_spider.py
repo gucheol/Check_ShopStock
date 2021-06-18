@@ -54,23 +54,35 @@ class QuotesSpider(scrapy.Spider):
             print("잘못된 url")
 
 ####################### xpath로 특정 단어 찾기 ###########################################################
+    def find_xpath_text(self, response, shop_name, hint_text, hint_xpath):
+        isDebug = False
+        feature_text = response.xpath(hint_xpath).get()
+        if hint_text in feature_text:
+            if isDebug == True:
+                print(f'{shop_name} : 재고있음', response.url)
+                self.write_log(f'{shop_name} : 재고있음 {response.url}')     
+        else:
+            print(f'{shop_name} : ui 변경', response.url)
+
+    def empty_stock(self, response, shop_name):
+        print(f'{shop_name} : 품절', response.url)
+        self.write_log(f'{shop_name} : 품절 {response.url}')
+
     def write_log(self, text):
         with open('test.log', 'a') as f:
             f.write(text +'\n')
 
-    def check(self, response, shop_name, hint_text, hint_xpath):
+    def check(self, response, shop_name, hint_text, hint_xpath, hint_xpath2 = None):
         try:
-            isDebug = False
-            feature_text = response.xpath(hint_xpath).get()
-            if hint_text in feature_text:
-                if isDebug == True:
-                    print(f'{shop_name} : 재고있음', response.url)
-                    self.write_log(f'{shop_name} : 재고있음 {response.url}')     
-            else:
-                print(f'{shop_name} : ui 변경', response.url)
+            self.find_xpath_text(response, shop_name, hint_text, hint_xpath)
         except:
-            print(f'{shop_name} : 품절', response.url)
-            self.write_log(f'{shop_name} : 품절 {response.url}')
+            if hint_xpath2 != None: # 네이버 xpath가 수시로 바뀜
+                try:
+                    self.find_xpath_text(response, shop_name, hint_text, hint_xpath2)
+                except:
+                    self.empty_stock(response, shop_name)    
+            else:
+                self.empty_stock(response, shop_name)
 
     def coupang_check(self, response):
         shop_name = '쿠팡'
@@ -118,7 +130,8 @@ class QuotesSpider(scrapy.Spider):
         shop_name = '네이버'
         hint_text = '구매하기'
         hint_xpath = '//*[@id="content"]/div/div[2]/div[2]/fieldset/div[8]/ul[1]/li[1]/a/span/text()'
-        self.check(response, shop_name, hint_text, hint_xpath)
+        hint_xpath2 = '//*[@id="content"]/div/div[2]/div[2]/fieldset/div[7]/ul[1]/li/a/span/text()'
+        self.check(response, shop_name, hint_text, hint_xpath, hint_xpath2=hint_xpath2)
     
     def eleven_street_check(self, response):
         shop_name = '11번가'
