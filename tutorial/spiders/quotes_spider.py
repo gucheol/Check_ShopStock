@@ -11,7 +11,7 @@ class QuotesSpider(scrapy.Spider):
             'http://www.ssg.com/item/itemView.ssg?itemId=0000001570515',
             'http://www.ssg.com/item/itemView.ssg?itemId=1000039507427',
             'http://itempage3.auction.co.kr/DetailView.aspx?itemno=C224484103',
-            'https://browse.auction.co.kr/search/item?itemno=B606716005',
+            'http://itempage3.auction.co.kr/DetailView.aspx?itemno=B606716005',
             'http://mitem.gmarket.co.kr/Item?goodscode=1808202487',
             'http://mitem.gmarket.co.kr/Item?goodscode=2064152797',
             'https://mw.wemakeprice.com/product/1284302768',
