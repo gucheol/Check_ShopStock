@@ -21,7 +21,7 @@ class QuotesSpider(scrapy.Spider):
             'https://www.costco.co.kr/p/640013',
             'https://www.costco.co.kr/p/1900680',
             'https://smartstore.naver.com/ks1st/products/4497205319',
-            'https://smartstore.naver.com/jexco21/products/4952245275',
+            'https://smartstore.naver.com/jexco21/products/5222435156',
             'https://www.coupang.com/vp/products/1341628026'
         ]
         for url in urls:
