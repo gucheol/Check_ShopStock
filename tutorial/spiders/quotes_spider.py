@@ -18,7 +18,7 @@ class QuotesSpider(scrapy.Spider):
             'https://mw.wemakeprice.com/product/203255871',
             'http://mobile.tmon.co.kr/deals/5262257414',
             'http://mobile.tmon.co.kr/deals/3473350446',
-            'https://www.costco.co.kr/p/640013',
+            'https://www.costco.co.kr/p/1600329',
             'https://www.costco.co.kr/p/1900680',
             'https://smartstore.naver.com/ks1st/products/4497205319',
             'https://smartstore.naver.com/jexco21/products/5222435156',
@@ -54,19 +54,22 @@ class QuotesSpider(scrapy.Spider):
             print("잘못된 url")
 
 ####################### xpath로 특정 단어 찾기 ###########################################################
+    def write_log_exist(self, shop_name, url):
+        print(f'{shop_name} : 재고있음', url)
+        self.write_log(f'{shop_name} : 재고있음 {url}')
+
+    def write_log_empty(self, shop_name, url):
+        print(f'{shop_name} : 품절', url)
+        self.write_log(f'{shop_name} : 품절 {url}')
+
     def find_xpath_text(self, response, shop_name, hint_text, hint_xpath):
         isDebug = False
         feature_text = response.xpath(hint_xpath).get()
         if hint_text in feature_text:
             if isDebug == True:
-                print(f'{shop_name} : 재고있음', response.url)
-                self.write_log(f'{shop_name} : 재고있음 {response.url}')     
+                self.write_log_exist(shop_name, response.url)
         else:
             print(f'{shop_name} : ui 변경', response.url)
-
-    def empty_stock(self, response, shop_name):
-        print(f'{shop_name} : 품절', response.url)
-        self.write_log(f'{shop_name} : 품절 {response.url}')
 
     def write_log(self, text):
         with open('test.log', 'a') as f:
@@ -80,9 +83,17 @@ class QuotesSpider(scrapy.Spider):
                 try:
                     self.find_xpath_text(response, shop_name, hint_text, hint_xpath2)
                 except:
-                    self.empty_stock(response, shop_name)    
+                    self.write_log_empty(shop_name, response.url)    
             else:
-                self.empty_stock(response, shop_name)
+                self.write_log_empty(shop_name, response.url)
+
+    def hide_btn_check(self, response, shop_name, hint_text, hint_xpath): # 코스트코는 새로운 ui가 튀어나옴
+        try:
+            feature_text = response.xpath(hint_xpath).get()
+            if hint_text in feature_text:
+                self.write_log_empty(shop_name, response.url)
+        except:
+            self.write_log_exist(shop_name, response.url)
 
     def coupang_check(self, response):
         shop_name = '쿠팡'
@@ -122,9 +133,9 @@ class QuotesSpider(scrapy.Spider):
 
     def costco_check(self, response):
         shop_name = '코스트코'
-        hint_text = '바로 결제'
-        hint_xpath = '//*[@id="buyNowButton"]/text()'
-        self.check(response, shop_name, hint_text, hint_xpath)
+        hint_text = '품절' #'바로 결제'
+        hint_xpath = '//*[@id="addToCartForm"]/button[1]/text()' #'//*[@id="buyNowButton"]/text()'
+        self.hide_btn_check(response, shop_name, hint_text, hint_xpath)
 
     def naver_check(self, response):
         shop_name = '네이버'
