@@ -18,7 +18,7 @@ class QuotesSpider(scrapy.Spider):
             # 'https://mw.wemakeprice.com/product/203255871',
             # 'http://mobile.tmon.co.kr/deals/5262257414',
             # 'http://mobile.tmon.co.kr/deals/3473350446',
-            'https://www.costco.co.kr/rest/v2/korea/products/1600329/?fields=FULL&lang=ko&curr=KRW',
+            'https://www.costco.co.kr/rest/v2/korea/products/645803/?fields=FULL&lang=ko&curr=KRW',
             'https://www.costco.co.kr/rest/v2/korea/products/609542/?fields=FULL&lang=ko&curr=KRW'
             # 'https://smartstore.naver.com/ks1st/products/4497205319',
             # 'https://smartstore.naver.com/jexco21/products/5222435156',
