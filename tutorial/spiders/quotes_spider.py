@@ -7,22 +7,22 @@ class QuotesSpider(scrapy.Spider):
     # 정상 : 'http://www.11st.co.kr/products/3335249590',
     def start_requests(self): # 가맹점 url 추가위치
         urls = [
-            'http://www.11st.co.kr/products/3335249590',
-            'http://www.ssg.com/item/itemView.ssg?itemId=0000001570515',
-            'http://www.ssg.com/item/itemView.ssg?itemId=1000039507427',
-            'http://itempage3.auction.co.kr/DetailView.aspx?itemno=C224484103',
-            'http://itempage3.auction.co.kr/DetailView.aspx?itemno=B822693636',
-            'http://mitem.gmarket.co.kr/Item?goodscode=2134616928',
-            'http://mitem.gmarket.co.kr/Item?goodscode=2064152797',
-            'https://mw.wemakeprice.com/product/1284302768',
-            'https://mw.wemakeprice.com/product/203255871',
-            'http://mobile.tmon.co.kr/deals/5262257414',
-            'http://mobile.tmon.co.kr/deals/3473350446',
-            'https://www.costco.co.kr/p/1600329',
-            'https://www.costco.co.kr/p/609542',
-            'https://smartstore.naver.com/ks1st/products/4497205319',
-            'https://smartstore.naver.com/jexco21/products/5222435156',
-            'https://www.coupang.com/vp/products/1341628026'
+            # 'http://www.11st.co.kr/products/3335249590',
+            # 'http://www.ssg.com/item/itemView.ssg?itemId=0000001570515',
+            # 'http://www.ssg.com/item/itemView.ssg?itemId=1000039507427',
+            # 'http://itempage3.auction.co.kr/DetailView.aspx?itemno=C224484103',
+            # 'http://itempage3.auction.co.kr/DetailView.aspx?itemno=B822693636',
+            # 'http://mitem.gmarket.co.kr/Item?goodscode=2134616928',
+            # 'http://mitem.gmarket.co.kr/Item?goodscode=2064152797',
+            # 'https://mw.wemakeprice.com/product/1284302768',
+            # 'https://mw.wemakeprice.com/product/203255871',
+            # 'http://mobile.tmon.co.kr/deals/5262257414',
+            # 'http://mobile.tmon.co.kr/deals/3473350446',
+            'https://www.costco.co.kr/rest/v2/korea/products/1600329/?fields=FULL&lang=ko&curr=KRW',
+            'https://www.costco.co.kr/rest/v2/korea/products/609542/?fields=FULL&lang=ko&curr=KRW'
+            # 'https://smartstore.naver.com/ks1st/products/4497205319',
+            # 'https://smartstore.naver.com/jexco21/products/5222435156',
+            # 'https://www.coupang.com/vp/products/1341628026'
         ]
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
@@ -87,14 +87,11 @@ class QuotesSpider(scrapy.Spider):
             else:
                 self.write_log_empty(shop_name, response.url)
 
-    def hide_btn_check(self, response, shop_name, hint_text, hint_xpath): # 코스트코는 새로운 ui가 튀어나옴
-        try:
-            feature_text = response.xpath(hint_xpath).get()
-            if hint_text in feature_text:
-                self.write_log_empty(shop_name, response.url)
-        except:
-            pass
-            # self.write_log_exist(shop_name, response.url)
+    def network_file_check(self, response, shop_name): # 코스트코는 iframe
+        goods_num = response.url.split('products/')[-1].split('/?fields')[0]
+        response_url = 'https://www.costco.co.kr/p/' + goods_num
+        if 'outOfStock' in response.text:
+            self.write_log_empty(shop_name, response_url)
 
     def coupang_check(self, response):
         shop_name = '쿠팡'
@@ -134,9 +131,7 @@ class QuotesSpider(scrapy.Spider):
 
     def costco_check(self, response):
         shop_name = '코스트코'
-        hint_text = '품절' #'바로 결제'
-        hint_xpath = '//*[@id="addToCartForm"]/button[1]/text()' #'//*[@id="buyNowButton"]/text()'
-        self.hide_btn_check(response, shop_name, hint_text, hint_xpath)
+        self.network_file_check(response, shop_name)
 
     def naver_check(self, response):
         shop_name = '네이버'
