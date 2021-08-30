@@ -11,15 +11,15 @@ class QuotesSpider(scrapy.Spider):
             'http://www.ssg.com/item/itemView.ssg?itemId=0000001570515',
             'http://www.ssg.com/item/itemView.ssg?itemId=1000039507427',
             'http://itempage3.auction.co.kr/DetailView.aspx?itemno=C224484103',
-            'http://itempage3.auction.co.kr/DetailView.aspx?itemno=B606716005',
-            'http://mitem.gmarket.co.kr/Item?goodscode=1808202487',
+            'http://itempage3.auction.co.kr/DetailView.aspx?itemno=B822693636',
+            'http://mitem.gmarket.co.kr/Item?goodscode=2134616928',
             'http://mitem.gmarket.co.kr/Item?goodscode=2064152797',
             'https://mw.wemakeprice.com/product/1284302768',
             'https://mw.wemakeprice.com/product/203255871',
             'http://mobile.tmon.co.kr/deals/5262257414',
             'http://mobile.tmon.co.kr/deals/3473350446',
             'https://www.costco.co.kr/p/1600329',
-            'https://www.costco.co.kr/p/1900680',
+            'https://www.costco.co.kr/p/609542',
             'https://smartstore.naver.com/ks1st/products/4497205319',
             'https://smartstore.naver.com/jexco21/products/5222435156',
             'https://www.coupang.com/vp/products/1341628026'
@@ -93,7 +93,8 @@ class QuotesSpider(scrapy.Spider):
             if hint_text in feature_text:
                 self.write_log_empty(shop_name, response.url)
         except:
-            self.write_log_exist(shop_name, response.url)
+            pass
+            # self.write_log_exist(shop_name, response.url)
 
     def coupang_check(self, response):
         shop_name = '쿠팡'
